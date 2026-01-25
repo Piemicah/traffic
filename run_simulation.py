@@ -83,7 +83,7 @@ def run(sim_steps=3600, log_every=5):
             "--remote-port",
             str(PORT),
             "--delay",
-            "100",
+            "200",
         ]
     )
     time.sleep(2)
