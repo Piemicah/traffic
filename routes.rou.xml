@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<routes>
+    <vType id="car"
+           accel="2.6"
+           decel="4.5"
+           sigma="0.5"
+           length="5"
+           maxSpeed="13"/>
+
+    <!-- Routes -->
+    <route id="N_S" edges="N2TL TL2S"/>
+    <route id="S_N" edges="S2TL TL2N"/>
+    <route id="E_W" edges="E2TL TL2W"/>
+    <route id="W_E" edges="W2TL TL2E"/>
+
+    <!-- Traffic flows -->
+    <flow id="flow_NS" route="N_S" begin="0" end="3600" vehsPerHour="600"/>
+    <flow id="flow_SN" route="S_N" begin="0" end="3600" vehsPerHour="600"/>
+    <flow id="flow_EW" route="E_W" begin="0" end="3600" vehsPerHour="400"/>
+    <flow id="flow_WE" route="W_E" begin="0" end="3600" vehsPerHour="400"/>
+</routes>
