@@ -4,6 +4,7 @@ from gymnasium import spaces
 import traci
 import uuid
 import random
+import winsound
 
 
 class SumoTrafficEnv(gym.Env):
@@ -59,6 +60,9 @@ class SumoTrafficEnv(gym.Env):
 
         self.flash_interval = 2  # change to 3 for faster flashing
         self.flash_state = False  # False=red, True=white
+
+        self.siren_playing = False
+        self.siren_file = "siren.wav"
 
     # -------------------------
     # SUMO START / STOP (SAFE)
@@ -200,6 +204,18 @@ class SumoTrafficEnv(gym.Env):
             except Exception:
                 pass
 
+    def handle_siren_sound(self, ambulance_present: bool):
+        if ambulance_present and not self.siren_playing:
+            self.siren_playing = True
+            winsound.PlaySound(
+                self.siren_file,
+                winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_LOOP,
+            )
+
+        if not ambulance_present and self.siren_playing:
+            self.siren_playing = False
+            winsound.PlaySound(None, winsound.SND_ASYNC)
+
     # -------------------------
     # GYM API
     # -------------------------
@@ -258,6 +274,10 @@ class SumoTrafficEnv(gym.Env):
 
         # flash lights
         self.flash_ambulances()
+
+        # 🔊 siren sound (start/stop)
+        ambulance_present = amb_ns == 1 or amb_ew == 1
+        self.handle_siren_sound(ambulance_present)
 
         self.conn.simulationStep()
 
