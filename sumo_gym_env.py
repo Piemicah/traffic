@@ -205,6 +205,11 @@ class SumoTrafficEnv(gym.Env):
                 pass
 
     def handle_siren_sound(self, ambulance_present: bool):
+        """
+        This function handles siren
+        :param ambulance_present: shows if ambulance present
+        :type ambulance_present: bool
+        """
         if ambulance_present and not self.siren_playing:
             self.siren_playing = True
             winsound.PlaySound(
